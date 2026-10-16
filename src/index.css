@@ -1,106 +1,81 @@
-@import "tailwindcss";
+@import './styles/tokens.css';
 
-:root {
-  --meridian-bg: #F7F5F0;
-  --meridian-surface: #FFFFFF;
-  --meridian-surface-elevated: #FDFCFA;
-  --meridian-surface-sunken: #EFEBE3;
-  --meridian-primary: #1F4D45;
-  --meridian-primary-hover: #173C36;
-  --meridian-primary-active: #112D29;
-  --meridian-primary-tint: #E3EDEA;
-  --meridian-secondary: #3C4A57;
-  --meridian-accent: #C4613A;
-  --meridian-accent-tint: #F6E6DE;
-  --meridian-text-primary: #1C2421;
-  --meridian-text-secondary: #4D5753;
-  --meridian-text-muted: #7A837F;
-  --meridian-border: #E1DCD1;
-  --meridian-border-strong: #C9C2B3;
-  --meridian-success: #2F7A55;
-  --meridian-success-tint: #E1F0E8;
-  --meridian-warning: #B7791F;
-  --meridian-warning-tint: #FBF0D9;
-  --meridian-error: #B3382F;
-  --meridian-error-tint: #F8E3E0;
-  --meridian-info: #2F5F8A;
-  --meridian-info-tint: #E1EBF4;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  --sh-1: 0 1px 2px rgba(28, 36, 33, 0.06);
-  --sh-2: 0 4px 16px rgba(28, 36, 33, 0.08);
-  --sh-3: 0 16px 48px rgba(28, 36, 33, 0.14);
+@layer base {
+  * {
+    border-color: var(--border);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--paper-50);
+    color: var(--ink-900);
+    font-family: var(--font-ui);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-feature-settings: "opsz" auto;
+  }
 }
 
-@theme {
-  --color-meridian-bg: var(--meridian-bg);
-  --color-meridian-surface: var(--meridian-surface);
-  --color-meridian-surface-elevated: var(--meridian-surface-elevated);
-  --color-meridian-surface-sunken: var(--meridian-surface-sunken);
-  --color-meridian-primary: var(--meridian-primary);
-  --color-meridian-primary-hover: var(--meridian-primary-hover);
-  --color-meridian-primary-active: var(--meridian-primary-active);
-  --color-meridian-primary-tint: var(--meridian-primary-tint);
-  --color-meridian-secondary: var(--meridian-secondary);
-  --color-meridian-accent: var(--meridian-accent);
-  --color-meridian-accent-tint: var(--meridian-accent-tint);
-  --color-meridian-text-primary: var(--meridian-text-primary);
-  --color-meridian-text-secondary: var(--meridian-text-secondary);
-  --color-meridian-text-muted: var(--meridian-text-muted);
-  --color-meridian-border: var(--meridian-border);
-  --color-meridian-border-strong: var(--meridian-border-strong);
-  --color-meridian-success: var(--meridian-success);
-  --color-meridian-success-tint: var(--meridian-success-tint);
-  --color-meridian-warning: var(--meridian-warning);
-  --color-meridian-warning-tint: var(--meridian-warning-tint);
-  --color-meridian-error: var(--meridian-error);
-  --color-meridian-error-tint: var(--meridian-error-tint);
-  --color-meridian-info: var(--meridian-info);
-  --color-meridian-info-tint: var(--meridian-info-tint);
-
-  --font-serif: 'Fraunces', serif;
-  --font-sans: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --radius-input: 6px;
-  --radius-chip: 6px;
-  --radius-card: 10px;
-  --radius-modal: 14px;
-  --radius-pill: 9999px;
-
-  --shadow-sh-1: var(--sh-1);
-  --shadow-sh-2: var(--sh-2);
-  --shadow-sh-3: var(--sh-3);
-}
-
-body {
-  background-color: var(--meridian-bg);
-  color: var(--meridian-text-primary);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Custom utility styles */
-.font-display {
-  font-family: var(--font-serif);
-  font-variation-settings: 'opsz' 36;
-}
-
+/* Tabular figures for numbers, tables, timestamps */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Scrollbar styling */
+/* Stitched border styles */
+.stitched-border {
+  position: relative;
+}
+
+.stitched-border::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1.5px dashed rgba(181, 71, 47, 0.45);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.stitched-border-strong::after {
+  border-color: rgba(181, 71, 47, 0.8);
+  border-style: dashed;
+}
+
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--paper-100);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--meridian-border-strong);
+  background: var(--border-strong);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--meridian-text-muted);
+  background: var(--ink-700);
+}
+
+/* Printable 6-up label sheet */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-page {
+    page-break-after: always;
+  }
 }

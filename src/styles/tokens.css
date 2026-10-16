@@ -1,0 +1,66 @@
+:root {
+  /* color */
+  --ink-900: #1C2B3A;
+  --ink-700: #34475A;
+  --ink-950: #13202C;
+  --thread-600: #B5472F;
+  --thread-700: #9A3A25;
+  --moss-600: #4F6B52;
+  --gold-500: #B8892B;
+  --paper-0: #FFFFFF;
+  --paper-50: #F7F3EC;
+  --paper-100: #FBF9F4;
+  --text-1: #1C2B3A;
+  --text-2: #4A5563;
+  --text-3: #7B8490;
+  --border: #E4DDD0;
+  --border-strong: #CFC6B5;
+  --success: #3F7D58;
+  --warning: #B7791F;
+  --error: #B3392F;
+  --info: #3A6EA5;
+
+  /* type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* spacing */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-14: 56px;
+  --s-20: 80px;
+  --s-30: 120px;
+
+  /* radius */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-full: 9999px;
+
+  /* shadow */
+  --sh-1: 0 1px 2px rgba(28, 43, 58, 0.06);
+  --sh-2: 0 4px 12px rgba(28, 43, 58, 0.08);
+  --sh-3: 0 16px 40px rgba(28, 43, 58, 0.12);
+
+  /* motion */
+  --t-fast: 150ms;
+  --t-med: 280ms;
+  --t-slow: 600ms;
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* z-index */
+  --z-nav: 40;
+  --z-drawer: 60;
+  --z-modal: 70;
+  --z-toast: 80;
+  --z-tour: 50;
+  --z-loader: 100;
+}
