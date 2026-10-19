@@ -1,12 +1,14 @@
 import React from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Check } from 'lucide-react';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'accent';
-  size?: 'sm' | 'md' | 'lg' | 'icon';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'accent' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
+  isSuccess?: boolean;
+  successText?: string;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -16,52 +18,70 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       variant = 'primary',
       size = 'md',
       isLoading = false,
-      leftIcon,
-      rightIcon,
+      isSuccess = false,
+      successText,
+      icon,
+      iconPosition = 'left',
       className = '',
       disabled,
       ...props
     },
     ref
   ) => {
-    // Height & padding rules from PRD §9: 48px mobile, 44px desktop
-    const sizeClasses = {
-      sm: 'h-9 px-3 text-xs rounded-sm',
-      md: 'h-11 sm:h-10 px-4 text-sm rounded-md font-medium',
-      lg: 'h-12 px-6 text-base rounded-md font-semibold',
-      icon: 'h-11 w-11 sm:h-10 sm:w-10 p-2 rounded-md flex items-center justify-center',
-    };
+    const baseStyles =
+      'inline-flex items-center justify-center font-medium transition-all duration-150 ease-out select-none active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none disabled:active:scale-100 rounded-sm focus-visible:outline-2 focus-visible:outline-secondary focus-visible:outline-offset-2';
 
-    const variantClasses = {
+    const sizeStyles = {
+      sm: 'text-xs px-2.5 py-1.5 h-8 gap-1.5',
+      md: 'text-sm px-4 py-2 h-10 gap-2',
+      lg: 'text-base px-5 py-2.5 h-12 gap-2.5',
+    }[size];
+
+    const variantStyles = {
       primary:
-        'bg-ink-900 text-paper-0 hover:bg-ink-700 active:scale-[0.98] active:bg-ink-950 shadow-sh-1 focus:ring-2 focus:ring-thread-600 focus:ring-offset-2',
-      accent:
-        'bg-thread-600 text-paper-0 hover:bg-thread-700 active:scale-[0.98] shadow-sh-1 focus:ring-2 focus:ring-thread-600 focus:ring-offset-2',
+        'bg-[#24473B] text-[#F6F3EE] hover:bg-[#1B382F] active:bg-[#142A23] shadow-1 group',
       secondary:
-        'bg-paper-0 text-ink-900 border border-border-strong hover:bg-paper-100 active:scale-[0.98] shadow-sh-1 focus:ring-2 focus:ring-thread-600 focus:ring-offset-2',
+        'bg-[#46617A] text-[#FFFFFF] hover:bg-[#3B5267] active:bg-[#304354] shadow-1',
+      outline:
+        'bg-transparent border border-[#CFC8BB] text-[#1F2421] hover:bg-[#EFEBE4] hover:border-[#1F2421]',
       ghost:
-        'bg-transparent text-ink-900 hover:bg-paper-100 active:scale-[0.98] focus:ring-2 focus:ring-thread-600 focus:ring-offset-2',
+        'bg-transparent text-[#1F2421] hover:bg-[#EFEBE4] active:bg-[#E3DED5]',
+      accent:
+        'bg-[#B5654A] text-white hover:bg-[#9E543C] active:bg-[#854530] shadow-1',
       danger:
-        'bg-status-error text-paper-0 hover:opacity-90 active:scale-[0.98] focus:ring-2 focus:ring-status-error focus:ring-offset-2',
-    };
+        'bg-[#B23A3A] text-white hover:bg-[#992E2E] active:bg-[#802525] shadow-1',
+    }[variant];
 
     return (
       <button
         ref={ref}
-        disabled={disabled || isLoading}
-        className={`inline-flex items-center justify-center gap-2 select-none transition-all duration-150 focus:outline-none disabled:opacity-50 disabled:pointer-events-none ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        disabled={disabled || isLoading || isSuccess}
+        className={`${baseStyles} ${sizeStyles} ${variantStyles} ${className}`}
         {...props}
       >
         {isLoading ? (
           <>
-            <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
-            <span>Submitting…</span>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span>Loading…</span>
+          </>
+        ) : isSuccess ? (
+          <>
+            <Check className="w-4 h-4 text-[#2F7D57]" />
+            <span>{successText || 'Done'}</span>
           </>
         ) : (
           <>
-            {leftIcon && <span className="flex-shrink-0">{leftIcon}</span>}
-            {children}
-            {rightIcon && <span className="flex-shrink-0">{rightIcon}</span>}
+            {icon && iconPosition === 'left' && (
+              <span className="transition-transform duration-150 group-hover:-translate-x-0.5">
+                {icon}
+              </span>
+            )}
+            <span>{children}</span>
+            {icon && iconPosition === 'right' && (
+              <span className="transition-transform duration-150 group-hover:translate-x-1">
+                {icon}
+              </span>
+            )}
           </>
         )}
       </button>

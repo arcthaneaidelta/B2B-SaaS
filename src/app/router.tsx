@@ -1,98 +1,76 @@
 import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { StorefrontLayout } from '../components/site/StorefrontLayout';
+import { AppLayout } from '../components/app/AppLayout';
 
-// Launcher
-import { LauncherPage } from '../features/launcher/LauncherPage';
+// Storefront routes
+import { Home } from '../routes/storefront/Home';
+import { Plans } from '../routes/storefront/Plans';
+import { PlanDetail } from '../routes/storefront/PlanDetail';
+import { HowItWorks } from '../routes/storefront/HowItWorks';
+import { Checkout } from '../routes/storefront/Checkout';
+import { ThankYou } from '../routes/storefront/ThankYou';
+import { Onboarding } from '../routes/storefront/Onboarding';
 
-// Scan Experience
-import { Landing } from '../features/scan/Landing';
-import { RegisterFlow } from '../features/scan/RegisterFlow';
-import { RegisterSuccess } from '../features/scan/RegisterSuccess';
-import { OrderFlow } from '../features/scan/OrderFlow';
-import { OrderSuccess } from '../features/scan/OrderSuccess';
-import { PrivacyPage } from '../features/scan/PrivacyPage';
+// Control Room App routes
+import { Overview } from '../routes/app/Overview';
+import { Pipeline } from '../routes/app/Pipeline';
+import { Data } from '../routes/app/Data';
+import { Runs } from '../routes/app/Runs';
+import { Errors } from '../routes/app/Errors';
+import { Payloads } from '../routes/app/Payloads';
+import { Test } from '../routes/app/Test';
+import { Handoff } from '../routes/app/Handoff';
 
-// Console
-import { ConsoleShell } from '../features/console/Shell';
-import { Dashboard } from '../features/console/Dashboard';
-import { SchoolsPage } from '../features/console/SchoolsPage';
-import { CatalogPage } from '../features/console/CatalogPage';
-import { RecordsPage } from '../features/console/RecordsPage';
-import { QRPage } from '../features/console/QRPage';
-import { SignIn } from '../features/console/SignIn';
-
-// Proposal support
-import { HowItWorksPage } from '../features/howitworks/HowItWorksPage';
+// 404 Not Found Page
+const NotFound = () => (
+  <div className="min-h-[60vh] flex flex-col items-center justify-center text-center p-8">
+    <span className="font-mono text-xs uppercase tracking-wider text-[#B5654A] font-semibold">
+      404 Error
+    </span>
+    <h1 className="font-display text-3xl font-medium text-[#1F2421] mt-2 mb-4">
+      Page Not Found
+    </h1>
+    <p className="text-sm text-[#7A817B] max-w-sm mb-6">
+      The requested scenario route does not exist.
+    </p>
+    <a
+      href="/"
+      className="px-4 py-2 bg-[#24473B] text-white text-xs font-semibold rounded-sm hover:bg-[#1B382F]"
+    >
+      Return to Storefront
+    </a>
+  </div>
+);
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <LauncherPage />,
-  },
-  // Scan Experience Routes
-  {
-    path: '/s',
-    element: <Landing />,
-  },
-  {
-    path: '/s/register',
-    element: <RegisterFlow />,
-  },
-  {
-    path: '/s/register/done',
-    element: <RegisterSuccess />,
-  },
-  {
-    path: '/s/order',
-    element: <OrderFlow />,
-  },
-  {
-    path: '/s/order/done',
-    element: <OrderSuccess />,
-  },
-  {
-    path: '/s/privacy',
-    element: <PrivacyPage />,
-  },
-  // Owner Console Routes
-  {
-    path: '/admin/sign-in',
-    element: <SignIn />,
-  },
-  {
-    path: '/admin',
-    element: <ConsoleShell />,
+    element: <StorefrontLayout />,
     children: [
-      {
-        index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: 'schools',
-        element: <SchoolsPage />,
-      },
-      {
-        path: 'catalog',
-        element: <CatalogPage />,
-      },
-      {
-        path: 'records',
-        element: <RecordsPage />,
-      },
-      {
-        path: 'qr',
-        element: <QRPage />,
-      },
+      { index: true, element: <Home /> },
+      { path: 'plans', element: <Plans /> },
+      { path: 'plans/:tier', element: <PlanDetail /> },
+      { path: 'how-it-works', element: <HowItWorks /> },
+      { path: 'checkout', element: <Checkout /> },
+      { path: 'thank-you', element: <ThankYou /> },
+      { path: 'onboarding', element: <Onboarding /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
-  // Proposal support
   {
-    path: '/how-it-works',
-    element: <HowItWorksPage />,
-  },
-  // Fallbacks
-  {
-    path: '*',
-    element: <Navigate to="/" replace />,
+    path: '/app',
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Overview /> },
+      { path: 'pipeline', element: <Pipeline /> },
+      { path: 'data', element: <Data /> },
+      { path: 'runs', element: <Runs /> },
+      { path: 'errors', element: <Errors /> },
+      { path: 'payloads', element: <Payloads /> },
+      { path: 'test', element: <Test /> },
+      { path: 'handoff', element: <Handoff /> },
+      { path: '*', element: <Navigate to="/app" replace /> },
+    ],
   },
 ]);
