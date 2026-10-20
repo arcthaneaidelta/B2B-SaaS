@@ -1,0 +1,85 @@
+/* Relziwallet design tokens (PRD Section 28). Source of truth; Tailwind maps to these. */
+:root {
+  /* Colour */
+  --pine-600: #1E4D45; --pine-700: #173D37; --pine-800: #11302B;
+  --pine-50: #EEF3F1; --pine-100: #DCE7E4; --pine-200: #BCD0CB;
+  --slate-600: #44627A; --slate-700: #385267; --slate-50: #E8EEF3;
+  --clay-500: #C2663D; --clay-700: #A9552F; --clay-50: #F6E6DD;
+  --paper: #F7F4EE; --surface: #FBF9F5; --elevated: #FFFFFF; --sunken: #F1EDE4;
+  --pressed: #F3EFE7;
+  --ink: #14201D; --ink-tooltip: #1B2421;
+  --text-primary: #1B2421; --text-secondary: #44504A; --text-muted: #66716B;
+  --text-disabled: #9AA39E; --text-on-dark: #F7F4EE;
+  --border: #E4DFD4; --border-strong: #CFC8B8; --divider: #ECE7DC;
+  --success: #2F7D5B; --success-50: #E3F1EA;
+  --warning: #B7791F; --warning-50: #F8EBD2; --warning-text: #8A5A12;
+  --error: #B4413A; --error-50: #F8E4E2;
+  --info: #3C6E8F; --info-50: #E2EDF3;
+  --chart-accommodation: #1E4D45; --chart-food: #C2663D; --chart-transport: #44627A;
+  --chart-activities: #B39B6E; --chart-extras: #86A596;
+  --scrim: rgba(20, 32, 29, 0.38);
+
+  /* Typography */
+  --font-display: "Newsreader Variable", "Newsreader", Georgia, serif;
+  --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --fs-h1: clamp(2.5rem, 5vw, 4.25rem); --lh-h1: 1.04; --ls-h1: -0.02em;
+  --fs-h2: clamp(2rem, 3.4vw, 2.75rem); --lh-h2: 1.10; --ls-h2: -0.015em;
+  --fs-h3: 1.75rem; --lh-h3: 1.2; --ls-h3: -0.01em;
+  --fs-h4: 1.125rem; --fs-body-lg: 1.125rem; --fs-body: 1rem; --fs-small: 0.875rem;
+  --fs-label: 0.75rem; --fs-button: 0.9375rem; --fs-mono: 0.75rem;
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600;
+
+  /* Spacing (4 px base) */
+  --space-1: 2px; --space-2: 4px; --space-3: 8px; --space-4: 12px; --space-5: 16px;
+  --space-6: 20px; --space-7: 24px; --space-8: 32px; --space-9: 40px; --space-10: 48px;
+  --space-11: 64px; --space-12: 80px; --space-13: 96px; --space-14: 128px;
+
+  /* Radius */
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 8px; --radius-lg: 10px;
+  --radius-xl: 16px; --radius-full: 999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 0 rgba(27, 36, 33, 0.04);
+  --shadow-sm: 0 1px 2px rgba(27, 36, 33, 0.05);
+  --shadow-md: 0 4px 16px -4px rgba(27, 36, 33, 0.08), 0 1px 3px rgba(27, 36, 33, 0.05);
+  --shadow-lg: 0 16px 40px -12px rgba(27, 36, 33, 0.16), 0 2px 6px rgba(27, 36, 33, 0.06);
+
+  /* Motion */
+  --dur-instant: 80ms; --dur-fast: 120ms; --dur-base: 220ms; --dur-medium: 320ms;
+  --dur-slow: 480ms; --dur-cinematic: 700ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* Layout */
+  --container-landing: 1200px; --container-app: 1280px; --container-admin: 1440px;
+  --nav-h: 64px; --nav-h-mobile: 56px; --tabbar-h: 64px;
+  --sidebar-w: 264px; --sidebar-w-collapsed: 72px; --drawer-w: 480px;
+
+  /* Z-index */
+  --z-base: 0; --z-sticky: 20; --z-nav: 30; --z-tabbar: 35; --z-drawer: 50;
+  --z-modal: 60; --z-popover: 70; --z-toast: 80; --z-tooltip: 90; --z-loader: 100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-instant: 0.01ms; --dur-fast: 0.01ms; --dur-base: 0.01ms; --dur-medium: 0.01ms;
+    --dur-slow: 0.01ms; --dur-cinematic: 0.01ms;
+  }
+}
+
+/* User override from Settings (Reduce motion: On) */
+html[data-motion="reduce"] {
+  --dur-instant: 0.01ms; --dur-fast: 0.01ms; --dur-base: 0.01ms; --dur-medium: 0.01ms;
+  --dur-slow: 0.01ms; --dur-cinematic: 0.01ms;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --border: #B9B09C; --border-strong: #8F8672; --divider: #CFC8B8;
+    --text-muted: #4E5853;
+  }
+}
