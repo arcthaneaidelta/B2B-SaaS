@@ -1,106 +1,86 @@
-import React, { useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { X } from 'lucide-react'
-import { cn } from '../../lib/cn'
-import { modalVariants, scrimVariants } from '../../motion/variants'
+import React, { useEffect } from 'react';
+import { X } from 'lucide-react';
 
-export interface ModalProps {
-  isOpen?: boolean
-  open?: boolean
-  onClose: () => void
-  title?: React.ReactNode
-  description?: React.ReactNode
-  children: React.ReactNode
-  maxWidth?: 'sm' | 'md' | 'lg' | 'xl'
-  className?: string
-  showCloseButton?: boolean
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: React.ReactNode;
+  subtitle?: string;
+  children: React.ReactNode;
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '4xl';
+  showCloseButton?: boolean;
 }
 
 export const Modal: React.FC<ModalProps> = ({
   isOpen,
-  open,
   onClose,
   title,
-  description,
+  subtitle,
   children,
   maxWidth = 'md',
-  className,
-  showCloseButton = true,
+  showCloseButton = true
 }) => {
-  const active = isOpen ?? open ?? false
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && active) onClose()
-    }
-    if (active) {
-      document.body.style.overflow = 'hidden'
-      window.addEventListener('keydown', handleKeyDown)
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
     }
     return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [active, onClose])
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
-  const maxWClass = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl',
-  }[maxWidth]
+  if (!isOpen) return null;
+
+  const widthClasses = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    '2xl': 'max-w-2xl',
+    '4xl': 'max-w-4xl'
+  };
 
   return (
-    <AnimatePresence>
-      {active && (
-        <div className="fixed inset-0 z-modal flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          {/* Scrim */}
-          <motion.div
-            variants={scrimVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            onClick={onClose}
-            className="fixed inset-0 bg-scrim backdrop-none"
-            aria-hidden="true"
-          />
-
-          {/* Modal content */}
-          <motion.div
-            variants={modalVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            role="dialog"
-            aria-modal="true"
-            className={cn(
-              'relative z-10 w-full bg-elevated rounded-xl shadow-lg border border-border p-6 overflow-hidden my-auto',
-              maxWClass,
-              className
-            )}
-          >
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#28332F]/50 backdrop-blur-xs animate-fade-in"
+      role="dialog"
+      aria-modal="true"
+      onClick={onClose}
+    >
+      <div
+        className={`w-full ${widthClasses[maxWidth]} bg-white rounded-xl shadow-xl border border-[#E5E5DD] overflow-hidden transform transition-all max-h-[90vh] flex flex-col`}
+        onClick={e => e.stopPropagation()}
+      >
+        {(title || showCloseButton) && (
+          <div className="flex items-start justify-between px-6 py-4 border-b border-[#E5E5DD] bg-[#FAF9F6]">
+            <div>
+              {typeof title === 'string' ? (
+                <h3 className="text-lg font-semibold text-[#28332F] leading-tight">{title}</h3>
+              ) : (
+                title
+              )}
+              {subtitle && <p className="text-xs text-[#777F79] mt-0.5">{subtitle}</p>}
+            </div>
             {showCloseButton && (
               <button
-                type="button"
                 onClick={onClose}
                 aria-label="Close dialog"
-                className="absolute top-4 right-4 p-1.5 rounded-lg text-text-muted hover:text-text-primary hover:bg-sunken transition-colors"
+                className="p-1 rounded-md text-[#777F79] hover:text-[#28332F] hover:bg-[#E5E5DD]/50 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
             )}
-
-            {title && (
-              <div className="mb-4 pr-8">
-                <h2 className="text-xl font-display font-medium text-text-primary">{title}</h2>
-                {description && <p className="text-sm text-text-secondary mt-1">{description}</p>}
-              </div>
-            )}
-
-            <div>{children}</div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
-  )
-}
+          </div>
+        )}
+        <div className="p-6 overflow-y-auto">{children}</div>
+      </div>
+    </div>
+  );
+};

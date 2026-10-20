@@ -1,255 +1,84 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ArrowUp, ArrowRight, CheckCircle2 } from 'lucide-react'
-import { Button } from '../ui/Button'
-import { Modal } from '../ui/Modal'
-import { LogoMark } from './Navbar'
-import { StatusDot } from '../ui/Chip'
-import { useStore } from '../../mock/store'
-import { demoConfig } from '../../config/demoConfig'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ShieldCheck, Mail, MapPin, ExternalLink } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [sent, setSent] = useState(false)
-  const [sending, setSending] = useState(false)
-  const [privacyOpen, setPrivacyOpen] = useState(false)
-  const [termsOpen, setTermsOpen] = useState(false)
-  const { demo } = useStore()
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email || message.length < 5) return
-    setSending(true)
-    setTimeout(() => {
-      setSending(false)
-      setSent(true)
-    }, 800)
-  }
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
   return (
-    <>
-      {/* 20.1 Closing CTA Band (Ink surface, text white) */}
-      <section className="bg-ink text-white py-20 md:py-28 relative overflow-hidden border-t border-white/10">
-        <div className="container-landing relative z-10">
-          <div className="max-w-2xl space-y-4">
-            <span className="eyebrow text-white/60 font-mono text-xs tracking-wider uppercase">START WITH ONE NUMBER</span>
-            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white text-balance">
-              Know the cost before you spend.
-            </h2>
-            <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-lg">
-              Build a trip budget in about a minute. No account, no booking, no card details.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-4">
-              <Link to="/trip/new">
-                <Button variant="inverse" size="lg">
-                  <span>Plan a trip budget</span>
-                  <ArrowRight className="w-4 h-4 btn-arrow" />
-                </Button>
-              </Link>
-              <Link to="/compare">
-                <Button variant="ghost-inverse" size="lg">
-                  <span>Compare providers</span>
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Ambient rate line motif in ink background */}
-        <svg
-          className="absolute -bottom-8 left-0 right-0 w-full h-24 overflow-visible opacity-10 pointer-events-none"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M 0,40 Q 300,10 600,30 T 1200,20 T 1800,50"
-            fill="none"
-            stroke="#FFFFFF"
-            strokeWidth="1.5"
-          />
-        </svg>
-      </section>
-
-      {/* 20.2 Editorial Footer */}
-      <footer className="bg-ink text-white/80 pt-16 pb-12 border-t border-white/10 text-xs font-sans">
-        <div className="container-landing space-y-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Col 1: Identity */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <LogoMark inverted />
-                <span className="font-display text-lg font-medium tracking-tight text-white">
-                  Relziwallet
-                </span>
+    <footer className="bg-[#FAF9F6] border-t border-[#E5E5DD] text-[#28332F] pt-16 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+          {/* Brand Col */}
+          <div className="col-span-2">
+            <Link to="/" className="flex items-center gap-2.5 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-[#24483D] flex items-center justify-center text-white font-bold text-sm">
+                <ShieldCheck className="w-5 h-5 text-[#E7EEE7]" />
               </div>
-              <p className="text-white/70 text-xs leading-relaxed max-w-xs">
-                An independent spend-abroad cost simulator and provider fee comparison utility.
-              </p>
-              <p className="text-white/45 text-[11px] leading-relaxed">
-                Estimates use illustrative demo data. Not financial advice.
-              </p>
-            </div>
-
-            {/* Col 2: Use it */}
-            <div className="space-y-3">
-              <h4 className="font-mono text-[11px] uppercase tracking-wider text-white font-semibold">
-                Use it
-              </h4>
-              <ul className="space-y-2 text-xs">
-                <li><Link to="/convert" className="text-white/75 hover:text-white transition-colors">Quick Converter</Link></li>
-                <li><Link to="/compare" className="text-white/75 hover:text-white transition-colors">Compare providers</Link></li>
-                <li><Link to="/trip/new" className="text-white/75 hover:text-white transition-colors">Plan a trip budget</Link></li>
-                <li><Link to="/destinations" className="text-white/75 hover:text-white transition-colors">Destinations index</Link></li>
-                <li><Link to="/rates" className="text-white/75 hover:text-white transition-colors">Live rate insights</Link></li>
-              </ul>
-            </div>
-
-            {/* Col 3: Understand it */}
-            <div className="space-y-3">
-              <h4 className="font-mono text-[11px] uppercase tracking-wider text-white font-semibold">
-                Understand it
-              </h4>
-              <ul className="space-y-2 text-xs">
-                <li><Link to="/methodology" className="text-white/75 hover:text-white transition-colors">Methodology &amp; formulas</Link></li>
-                <li><Link to="/help" className="text-white/75 hover:text-white transition-colors">Help &amp; FAQ</Link></li>
-                <li><Link to="/demo-notes" className="text-clay-400 hover:text-clay-300 font-semibold transition-colors">Demo notes (Architecture)</Link></li>
-                <li><Link to="/admin" className="text-white/75 hover:text-white transition-colors">Admin panel (Demo)</Link></li>
-              </ul>
-            </div>
-
-            {/* Col 4: Mini contact form */}
-            <div className="space-y-3">
-              <h4 className="font-mono text-[11px] uppercase tracking-wider text-white font-semibold">
-                Ask us
-              </h4>
-              {sent ? (
-                <div className="bg-white/10 p-3 rounded-lg border border-white/15 text-white space-y-1">
-                  <div className="flex items-center gap-1.5 text-emerald-400 font-medium text-xs">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Thanks for getting in touch.</span>
-                  </div>
-                  <p className="text-[11px] text-white/70">
-                    We reply within two working days at {demoConfig.CONTACT_EMAIL}.
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => { setSent(false); setMessage('') }}
-                    className="text-[11px] text-white underline pt-1 block"
-                  >
-                    Send another message
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleContactSubmit} className="space-y-2">
-                  <input
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email address"
-                    className="w-full h-8 px-2.5 rounded bg-white/10 border border-white/20 text-white text-xs placeholder:text-white/50 focus:outline-none focus:border-white focus:bg-white/15"
-                  />
-                  <textarea
-                    rows={2}
-                    required
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Your question..."
-                    className="w-full px-2.5 py-1.5 rounded bg-white/10 border border-white/20 text-white text-xs placeholder:text-white/50 focus:outline-none focus:border-white focus:bg-white/15 resize-none"
-                  />
-                  <button
-                    type="submit"
-                    disabled={sending}
-                    className="w-full h-8 rounded bg-white text-pine-900 font-bold text-xs hover:bg-white/90 transition-colors cursor-pointer flex items-center justify-center shadow-xs"
-                  >
-                    {sending ? 'Sending...' : 'Send message'}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/60">
-            <div className="flex flex-wrap items-center gap-4">
-              <span>© 2026 Relziwallet</span>
-              <button
-                type="button"
-                onClick={() => setPrivacyOpen(true)}
-                className="hover:text-white transition-colors cursor-pointer"
-              >
-                Privacy
-              </button>
-              <button
-                type="button"
-                onClick={() => setTermsOpen(true)}
-                className="hover:text-white transition-colors cursor-pointer"
-              >
-                Terms
-              </button>
-              <span className="font-mono text-white/50">
-                Prepared by {demoConfig.PROPOSAL_AUTHOR}
+              <span className="font-bold tracking-tight text-[#28332F] text-lg">VERITY</span>
+            </Link>
+            <p className="text-sm text-[#777F79] max-w-sm leading-relaxed mb-4">
+              A high-trust Nordic professional verification infrastructure and explainable recruitment matching engine.
+              Connecting verified Swedish skilled professionals with industrial employers.
+            </p>
+            <div className="flex flex-col space-y-1.5 text-xs text-[#777F79]">
+              <span className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-[#356653]" />
+                Kungsbroplan 1, 111 22 Stockholm, Sweden (Fictional Demo Address)
+              </span>
+              <span className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-[#356653]" />
+                demo-inquiries@verity-nordic.example
               </span>
             </div>
+          </div>
 
-            <div className="flex items-center gap-4">
-              {/* Live status line */}
-              <div className="inline-flex items-center gap-1.5 font-mono text-[11px] text-white/80">
-                <StatusDot status={demo.staleFeed ? 'stale' : 'fresh'} pulse />
-                <span>Rates fresh • All systems normal</span>
-              </div>
+          {/* Product */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#24483D] mb-3">Product</h4>
+            <ul className="space-y-2 text-sm text-[#777F79]">
+              <li><Link to="/how-it-works" className="hover:text-[#24483D]">How It Works</Link></li>
+              <li><Link to="/app/employer/requirements" className="hover:text-[#24483D]">Workforce Criteria</Link></li>
+              <li><Link to="/app/employer/matches" className="hover:text-[#24483D]">Explainable Matching</Link></li>
+              <li><Link to="/app/candidate/passport" className="hover:text-[#24483D]">Digital Passports</Link></li>
+              <li><Link to="/app/verification/queue" className="hover:text-[#24483D]">Verification Queue</Link></li>
+            </ul>
+          </div>
 
-              {/* Back to top */}
-              <button
-                type="button"
-                onClick={scrollToTop}
-                aria-label="Back to top"
-                className="inline-flex items-center gap-1 text-white/80 hover:text-white transition-colors cursor-pointer group"
-              >
-                <span>Back to top</span>
-                <ArrowUp className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
-              </button>
-            </div>
+          {/* Solutions */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#24483D] mb-3">Workspaces</h4>
+            <ul className="space-y-2 text-sm text-[#777F79]">
+              <li><Link to="/employers" className="hover:text-[#24483D]">For Employers</Link></li>
+              <li><Link to="/professionals" className="hover:text-[#24483D]">For Professionals</Link></li>
+              <li><Link to="/pricing" className="hover:text-[#24483D]">Subscription Plans</Link></li>
+              <li><Link to="/app/employer/pipeline" className="hover:text-[#24483D]">Recruitment Kanban</Link></li>
+              <li><Link to="/app/employer/contracts" className="hover:text-[#24483D]">Electronic Contracts</Link></li>
+            </ul>
+          </div>
+
+          {/* Trust & Legal */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#24483D] mb-3">Trust & Security</h4>
+            <ul className="space-y-2 text-sm text-[#777F79]">
+              <li><Link to="/verification-standards" className="hover:text-[#24483D]">Verification Standards</Link></li>
+              <li><Link to="/security" className="hover:text-[#24483D]">GDPR & Privacy Protocol</Link></li>
+              <li><Link to="/security" className="hover:text-[#24483D]">Synthetic Data Notice</Link></li>
+              <li><Link to="/demo" className="hover:text-[#24483D] flex items-center gap-1">Demo Boundaries <ExternalLink className="w-3 h-3" /></Link></li>
+              <li><Link to="/contact" className="hover:text-[#24483D]">Contact Team</Link></li>
+            </ul>
           </div>
         </div>
-      </footer>
 
-      {/* Privacy Modal */}
-      <Modal
-        isOpen={privacyOpen}
-        onClose={() => setPrivacyOpen(false)}
-        title="Privacy Notice (Demo)"
-      >
-        <div className="space-y-3 text-sm text-text-secondary leading-relaxed">
-          <p>
-            In this interactive demo, nothing you type leaves your device. All calculations, trip simulations, and setting customizations are performed directly in your browser using pure client-side logic.
-          </p>
-          <p>
-            Saved trips and overrides persist locally in your browser storage (<code className="font-mono text-xs bg-sunken px-1 rounded">localStorage</code>) and can be cleared at any time via Settings or the Demo Controls pill.
-          </p>
+        {/* Bottom Banner */}
+        <div className="pt-8 border-t border-[#E5E5DD] flex flex-col md:flex-row items-center justify-between text-xs text-[#777F79] gap-4">
+          <p>© 2026 VERITY Nordic AB. All candidate profiles, verification documents, and company records are fictional and illustrative.</p>
+          <div className="flex items-center gap-4">
+            <span className="px-2 py-0.5 bg-[#FAF3E8] border border-[#EDD9B8] text-[#A87532] rounded font-medium">
+              Demo Prototype · Non-production
+            </span>
+            <span>Swedish Enterprise Design</span>
+          </div>
         </div>
-      </Modal>
-
-      {/* Terms Modal */}
-      <Modal
-        isOpen={termsOpen}
-        onClose={() => setTermsOpen(false)}
-        title="Terms of Use (Demo)"
-      >
-        <div className="space-y-3 text-sm text-text-secondary leading-relaxed">
-          <p>
-            Relziwallet is an interactive prototype simulation utility built to demonstrate fintech comparison architecture, complex fee rule calculation, and admin state management.
-          </p>
-          <p>
-            All provider pricing, fee matrices, and foreign exchange conversion rates displayed in this demo are illustrative mock data and do not represent binding financial quotes or advice.
-          </p>
-        </div>
-      </Modal>
-    </>
-  )
-}
+      </div>
+    </footer>
+  );
+};
